@@ -15,13 +15,13 @@
                         <div class="col-12 col-lg-4">
                             <div class="mb-3">
                                 <label for="alias">Alias:</label>
-                                <input type="text" class="form-control" name="alias" id="alias" value="<?php echo isset($input['alias']) ?  $input['alias']: '';?>" />
+                                <input type="text" class="form-control" name="alias" id="alias" value="<?php echo isset($input['alias']) ? $input['alias'] : ''; ?>" />
                             </div>
                         </div>  
                         <div class="col-12 col-lg-4">
                             <div class="mb-3">
                                 <label for="nombre_completo">Nombre completo:</label>
-                                <input type="text" class="form-control" name="nombre_completo" id="nombre_completo" value=" <?php echo isset($input['nombre_completo']) ? $input['nombre_completo'] : '';?>  " />
+                                <input type="text" class="form-control" name="nombre_completo" id="nombre_completo" value="<?php echo isset($input['nombre_completo']) ? $input['nombre_completo'] : ''; ?>" />
                             </div>
                         </div> 
                         <div class="col-12 col-lg-3">
@@ -30,8 +30,8 @@
                                 <select name="id_tipo_proveedor[]" id="id_tipo_proveedor" class="form-control select2" data-placeholder="Tipo proveedor" multiple>
                                     <option value="">-</option>
                                     <?php foreach ($tipos as $tipo) { ?>
-                                    <option value="<?php echo $tipo['id_tipo_proveedor'] ?>" <?php echo  isset($input['id_tipo_proveedor']) && in_array($tipo['id_tipo_proveedor'], $input['id_tipo_proveedor']) ? 'selected' : '';   ?>><?php echo $tipo['nombre_tipo_proveedor'] 
-                                           ?></option>
+                                        <option value="<?php echo $tipo['id_tipo_proveedor'] ?>"<?php echo isset($input['id_tipo_proveedor']) && in_array($tipo['id_tipo_proveedor'], $input['id_tipo_proveedor']) ? 'selected' : ''; ?>><?php echo $tipo['nombre_tipo_proveedor']
+                                        ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -41,13 +41,11 @@
                                 <label for="id_continente">Continente:</label>
                                 <select name="id_continente" id="id_continente" class="form-control" data-placeholder="Continente">
                                     <option value="">-</option>
-                                    <?php 
-                                   
-                                    foreach ($continentes as $continente) { ?>
-                                        <option value="<?php echo $continente['id_continente'] ?>" <?php echo isset($input['id_continente']) && $input['id_continente']==$continente['id_continente'] ? 'selected': '';  ?> >  <?php echo $continente['nombre_continente'] ?> </option>
+                                    <?php foreach ($continentes as $continente) { ?>
+                                        <option value="<?php echo $continente['id_continente'] ?>"<?php echo isset($input['id_continente']) && $input['id_continente'] == $continente['id_continente'] ? 'selected' : ''; ?> >  <?php echo $continente['nombre_continente'] ?> </option>
                                         <?php
                                     }
-                                 ?>                                                                         
+                                    ?>                                                                         
                                 </select>
                             </div>
                         </div>                        
@@ -56,10 +54,10 @@
                                 <label for="anho_fundacion">Año fundación:</label>
                                 <div class="row">
                                     <div class="col-6">
-                                        <input type="text" class="form-control" name="min_anho" id="min_anho" value="<?php echo isset($input['min_anho']) ?  $input['min_anho']: '';?>" placeholder="Mí­nimo" />
+                                        <input type="text" class="form-control" name="min_anho" id="min_anho" value="<?php echo isset($input['min_anho']) ? $input['min_anho'] : ''; ?>" placeholder="Mí­nimo" />
                                     </div>
                                     <div class="col-6">
-                                        <input type="text" class="form-control" name="max_anho" id="max_anho" value="<?php echo isset($input['max_anho']) ?  $input['max_anho']: '';?>" placeholder="Máximo" />
+                                        <input type="text" class="form-control" name="max_anho" id="max_anho" value="<?php echo isset($input['max_anho']) ? $input['max_anho'] : ''; ?>" placeholder="Máximo" />
                                     </div>
                                 </div>
                             </div>
@@ -121,40 +119,18 @@
                     <p class="text-danger">No se han podido mostrar resultado <p>
                     <?php } ?>
             </div>
-            <div class="card-footer">
-                <nav aria-label="Navegacion por paginas">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=1&order=1" aria-label="First">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">First</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=2&order=1" aria-label="Previous">
-                                <span aria-hidden="true">&lt;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
 
-                        <li class="page-item active"><a class="page-link" href="#">3</a></li>   
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=4&order=1" aria-label="Next">
-                                <span aria-hidden="true">&gt;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=8&order=1" aria-label="Last">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Last</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+            <div class="card shadow mb-4">
+
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" >
+                    <a href="/proveedores?paginar=<?php echo ($page >= 0); ?>"><input type="button" id="btnmenos" value="<"/></a> 
+                    <a href="/proveedores?page=<?php echo $page ?>"><?php echo $page; ?></a>
+                    <a href="/proveedores?paginar=<?php echo 1 ?>"><input type="button" id="btnmas" value=">"/></a>
+                </div>
+
+
             </div>
-        </div>
-    </div>                        
-</div>
-<!--Fin HTML -->
+        </div>                        
+    </div>
+    <!--Fin HTML -->
 

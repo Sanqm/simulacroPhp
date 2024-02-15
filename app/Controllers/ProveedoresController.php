@@ -19,7 +19,8 @@ class ProveedoresController  extends \Com\Daw2\Core\BaseController {
             'proveedores' => $model->getFiltros($_GET),
             'tipos' => $modelauxtipo->getAllTipos(),
             'continentes' =>$modelauxContinente->getAllContinentes(),
-            'input' => filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS)
+            'input' => filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS),
+            'page' => $model->getPages($_GET)
         );
         $this->view->showViews(array('templates/header.view.php', 'proveedores.view.php',  'templates/footer.view.php'), $data);
     }

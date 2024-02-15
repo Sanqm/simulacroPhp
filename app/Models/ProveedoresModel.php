@@ -5,7 +5,8 @@ namespace Com\Daw2\Models;
 class ProveedoresModel extends \Com\Daw2\Core\BaseModel {
 
     private const SELECT_FROM = "select proveedor.* , aux_tipo_proveedor.nombre_tipo_proveedor , aux_continente.nombre_continente, aux_continente.continente_avisar , proveedor.anho_fundacion  FROM proveedor LEFT JOIN aux_tipo_proveedor ON aux_tipo_proveedor.id_tipo_proveedor = proveedor.id_tipo_proveedor LEFT JOIN aux_continente ON proveedor.id_continente = aux_continente.id_continente";
-
+    private const SELECT_PAG = "select count(*) as total from proveedor p  left join aux_tipo_proveedor atp  on  atp.id_tipo_proveedor = p.id_tipo_proveedor left join aux_continente ac on p.id_continente = ac.id_continente";
+    private const NUM_REG = 25;
     function getAll() {
         return $this->pdo->query(self::SELECT_FROM)->fetchAll();
     }
@@ -22,12 +23,15 @@ class ProveedoresModel extends \Com\Daw2\Core\BaseModel {
         $vars = [];
 
         if (!empty($filtros['alias'])) {
-            $condiciones[] = "UPPER(alias) LIKE UPPER(:alias)";
+           
+            $condiciones[] = "alias LIKE :alias";
+
             $vars['alias'] = "%$filtros[alias]%";
         }
 
         if (!empty($filtros['nombre_completo'])) {
-            $condiciones[] = "UPPER (nombre_completo) LIKE UPPER(:nombre_completo)";
+  
+            $condiciones[]= "nombre_completo LIKE :nombre_completo";
             $vars['nombre_completo'] = "%$filtros[nombre_completo]%";
         }
 
@@ -64,13 +68,38 @@ class ProveedoresModel extends \Com\Daw2\Core\BaseModel {
         
         if (!empty($condiciones)) {
             $query .= " where " . implode(' AND ', $condiciones);
-
+          //  var_dump($query);
+         //   die;
             return $this->executeQuery($query, $vars);
         } else {
             return $this->pdo->query($query)->fetchAll();
         }
     }
 
+    function getPages(array $filtros): int{
+        $stmt = $this->pdo->query(self::SELECT_PAG);
+        $totRegistros = $stmt->fetch()['total'];
+        $totalPaginas= ceil(floatval($totRegistros /self::NUM_REG));
+        if(!isset($fitros['page'])){
+            $regPaginas = self::NUM_REG * ($filtros['page'] -1);
+        }
+        if(!isset($filtros['page']) || $filtros['page']>0){
+            return (int) $totalPaginas;
+        }else{
+            return (int) 0;
+        }
+      
+    }
+    
+    function getLimitPages(){
+        if(isset($filtros['page']) && filter_var($fitros['page'], FILTER_VALIDATE_INT) && $filtres['page'] > 0){
+            return (int)$fitros['page'];
+        }else{
+            return 1;
+        }
+        
+    }
+    
 }
 
 ?>
