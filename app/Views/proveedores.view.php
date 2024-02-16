@@ -88,11 +88,11 @@
                     <table id="tabladatos" class="table table-striped">                    
                         <thead>
                             <tr>
-                                <th><a href="/proveedores?order=1">Alias</a> <i class="fas fa-sort-amount-down-alt"></i></th>
-                                <th><a href="/proveedores?order=2">Nombre Completo</a> </th>
-                                <th><a href="/proveedores?order=3">Tipo</a> </th>
-                                <th><a href="/proveedores?order=4">Continente</a> </th>
-                                <th><a href="/proveedores?order=5">Año fundación</a> </th>
+                                <th><a href="/proveedores?order=<?php echo ($order==1)?'-':'';?>1&<?php echo $parameters;?>">Alias</a> <i class="fas fa-sort-amount-down-alt"></i></th>
+                                <th><a href="/proveedores?order=<?php echo ($order==2)?'-':'';?>2&<?php echo $parameters;?>">Nombre Completo</a> </th>
+                                <th><a href="/proveedores?order=<?php echo ($order==3)?'-':'';?>3&<?php echo $parameters;?>">Tipo</a> </th>
+                                <th><a href="/proveedores?order=<?php echo ($order==4)?'-':'';?>4&<?php echo $parameters;?>">Continente</a> </th>
+                                <th><a href="/proveedores?order=<?php echo ($order==5)?'-':'';?>5&<?php echo $parameters;?>">Año fundación</a> </th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -128,13 +128,13 @@
                         if ($paginaActual > 1) {
                             ?>
                             <li class="page-item">
-                                <a class="page-link" href="/usuarios?page=1&<?php echo $parameters; ?>" aria-label="First">
+                                <a class="page-link" href="/proveedores?page=1&<?php echo $parameters; ?>" aria-label="First">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">First</span>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="/usuarios?page=<?php echo ($paginaActual - 1); ?>&<?php echo $parameters; ?>" aria-label="Previous">
+                                <a class="page-link" href="/proveedores?page=<?php echo ($paginaActual - 1); ?>&<?php echo $parameters; ?>" aria-label="Previous">
                                     <span aria-hidden="true">&lt;</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
@@ -148,13 +148,13 @@
                         if ($maxPagina > $paginaActual) {
                             ?>
                             <li class="page-item">
-                                <a class="page-link" href="/usuarios?page=<?php echo ($paginaActual + 1); ?>&<?php echo $parameters; ?>" aria-label="Next">
+                                <a class="page-link" href="/proveedores?page=<?php echo ($paginaActual + 1); ?>&<?php echo $parameters; ?>" aria-label="Next">
                                     <span aria-hidden="true">&gt;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="/usuarios?page=<?php echo $maxPagina; ?>&<?php echo $parameters; ?>" aria-label="Last">
+                                <a class="page-link" href="/proveedores?page=<?php echo $maxPagina; ?>&<?php echo $parameters; ?>" aria-label="Last">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Last</span>
                                 </a>

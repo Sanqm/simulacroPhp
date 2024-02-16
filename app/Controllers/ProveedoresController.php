@@ -16,17 +16,20 @@ class ProveedoresController  extends \Com\Daw2\Core\BaseController {
         $numeroRegistros = $model->getNumRegPages($_GET); 
        $maxPag = ceil($numeroRegistros/$_ENV['page.size']);
         unset($copiGet['page']);
+        unset($copiGet['order']);
         $data = array(
             'titulo' => 'Proveedores',
             'breadcrumb' => ['Inicio', 'Proveedores'],
             'seccion' => '/proveedores',
-            'proveedores' => $model->getFiltros($_GET),
+            'proveedores' => $model->getByFiltros($_GET),
             'tipos' => $modelauxtipo->getAllTipos(),
             'continentes' =>$modelauxContinente->getAllContinentes(),
             'input' => filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS),
             'paginaActual' => $model->getPages($_GET),
-             'parameters' => http_build_query($copiGet), 
-            'maxPagina' => $maxPag
+            'parameters' => http_build_query($copiGet), 
+            'maxPagina' => $maxPag,
+            'order' => $model->getOrder($_GET)
+            
         );
         $this->view->showViews(array('templates/header.view.php', 'proveedores.view.php',  'templates/footer.view.php'), $data);
     }
