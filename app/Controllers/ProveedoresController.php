@@ -12,6 +12,10 @@ class ProveedoresController  extends \Com\Daw2\Core\BaseController {
         $model = new  \Com\Daw2\Models\ProveedoresModel();
         $modelauxtipo = new \Com\Daw2\Models\AuxTipoModel();
         $modelauxContinente = new \Com\Daw2\Models\AuxContinenteModel();
+        $copiGet = $_GET;
+        $numeroRegistros = $model->getNumRegPages($_GET); 
+       $maxPag = ceil($numeroRegistros/$_ENV['page.size']);
+        unset($copiGet['page']);
         $data = array(
             'titulo' => 'Proveedores',
             'breadcrumb' => ['Inicio', 'Proveedores'],
@@ -20,7 +24,9 @@ class ProveedoresController  extends \Com\Daw2\Core\BaseController {
             'tipos' => $modelauxtipo->getAllTipos(),
             'continentes' =>$modelauxContinente->getAllContinentes(),
             'input' => filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS),
-            'page' => $model->getPages($_GET)
+            'paginaActual' => $model->getPages($_GET),
+             'parameters' => http_build_query($copiGet), 
+            'maxPagina' => $maxPag
         );
         $this->view->showViews(array('templates/header.view.php', 'proveedores.view.php',  'templates/footer.view.php'), $data);
     }

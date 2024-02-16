@@ -120,17 +120,55 @@
                     <?php } ?>
             </div>
 
-            <div class="card shadow mb-4">
 
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" >
-                    <a href="/proveedores?paginar=<?php echo ($page >= 0); ?>"><input type="button" id="btnmenos" value="<"/></a> 
-                    <a href="/proveedores?page=<?php echo $page ?>"><?php echo $page; ?></a>
-                    <a href="/proveedores?paginar=<?php echo 1 ?>"><input type="button" id="btnmas" value=">"/></a>
-                </div>
+            <div class="card-footer">
+                <nav aria-label="Navegacion por paginas">
+                    <ul class="pagination justify-content-center">
+                        <?php
+                        if ($paginaActual > 1) {
+                            ?>
+                            <li class="page-item">
+                                <a class="page-link" href="/usuarios?page=1&<?php echo $parameters; ?>" aria-label="First">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">First</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/usuarios?page=<?php echo ($paginaActual - 1); ?>&<?php echo $parameters; ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <?php
+                        }
+                        ?>
 
-
+                        <li class="page-item active"><a class="page-link"><?php echo $paginaActual; ?></a></li>  
+                        <?php
+                        if ($maxPagina > $paginaActual) {
+                            ?>
+                            <li class="page-item">
+                                <a class="page-link" href="/usuarios?page=<?php echo ($paginaActual + 1); ?>&<?php echo $parameters; ?>" aria-label="Next">
+                                    <span aria-hidden="true">&gt;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="/usuarios?page=<?php echo $maxPagina; ?>&<?php echo $parameters; ?>" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Last</span>
+                                </a>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                </nav>
             </div>
-        </div>                        
+        </div>
+
     </div>
-    <!--Fin HTML -->
+</div>                        
+</div>
+<!--Fin HTML -->
 

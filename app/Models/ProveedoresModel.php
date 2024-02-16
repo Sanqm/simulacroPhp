@@ -76,22 +76,22 @@ class ProveedoresModel extends \Com\Daw2\Core\BaseModel {
         }
     }
 
-    function getPages(array $filtros): int{
-        $stmt = $this->pdo->query(self::SELECT_PAG);
-        $totRegistros = $stmt->fetch()['total'];
-        $totalPaginas= ceil(floatval($totRegistros /self::NUM_REG));
-        if(!isset($fitros['page'])){
-            $regPaginas = self::NUM_REG * ($filtros['page'] -1);
-        }
-        if(!isset($filtros['page']) || $filtros['page']>0){
-            return (int) $totalPaginas;
-        }else{
-            return (int) 0;
-        }
+    function getNumRegPages(array $filtros): int {
+      $filtrados = $this->getFiltros($filtros);
+      
+      if(empty($filtrados['condiciones'])){
+          $query= self::SELECT_PAG;
+          return  $this->pdo->query($query)->fetchColumn();
+      }else{
+          $query = self::SELECT_PAG . " where " . implode(" AND ", $filtrados);
+          $stmt = $this->pdo->prepare($query);
+          $stmt->execute($filtrados['vars']);
+          return  $stmt->fetchColumn();
+      }
       
     }
     
-    function getLimitPages(){
+    function getPages(array $filtros) : int{
         if(isset($filtros['page']) && filter_var($fitros['page'], FILTER_VALIDATE_INT) && $filtres['page'] > 0){
             return (int)$fitros['page'];
         }else{
